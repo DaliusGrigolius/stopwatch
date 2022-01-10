@@ -31,8 +31,8 @@
       stopButton.addEventListener("click", stopTime);
       resetButton.addEventListener("click", resetTime);
 
-      let sec = 45;
-      let mins = 0;
+      let sec = 55;
+      let mins = 9;
       let isTimerStarted = false;
 
       function addSecond() {
@@ -40,22 +40,25 @@
         if (isTimerStarted) {
           sec++;
 
-          if (sec <= 9) {
-            sec = "0" + sec;
-          }
           if (sec >= 60) {
             mins++;
-            sec = "0" + 0;
+            sec = 0;
           }
 
-          time.innerText = mins + ":" + sec;
+          const additionalMinsZero = additionalZero(mins);
+          const additionalSecZero = additionalZero(sec);
+
+          time.innerText = `${additionalMinsZero}${mins}:${additionalSecZero}${sec}`;
 
           setTimeout(addSecond, 1000);
         }
       }
 
+      function additionalZero (time) {
+        return time <= 9 ? "0" : "";
+      }
+
       function startTime() {
-        // !isTimerStarted - isTimerStarted === false
         if (!isTimerStarted) {
           isTimerStarted = true;
           addSecond();
@@ -71,7 +74,7 @@
       function resetTime() {
         sec = 0;
         mins = 0;
-        time.innerText = sec;
+        time.innerText = "00:00";
         stopTime();
       }
     </script>
